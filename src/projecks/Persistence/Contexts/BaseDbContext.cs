@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Security.Entities;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,14 +41,6 @@ namespace Persistence.Contexts
                 a.HasMany(p => p.Technologies);
             });
 
-           
-            
-            
-            ProgrammingLanguage[] programmingLanguageEntitySeeds = { new(1, "C#"), new(2, "Python"), new(3,"Java") };
-            modelBuilder.Entity<ProgrammingLanguage>().HasData(programmingLanguageEntitySeeds);
-
-
-
             modelBuilder.Entity<Technology>(a =>
             {
                 a.ToTable("Technologies").HasKey(k => k.Id);
@@ -58,6 +51,62 @@ namespace Persistence.Contexts
                 a.HasOne(p => p.ProgrammingLanguage);
             });
 
+
+            modelBuilder.Entity<User>(p =>
+            {
+                p.ToTable("Users").HasKey(k => k.Id);
+                p.Property(p => p.Id).HasColumnName("Id");
+                p.Property(p => p.FirstName).HasColumnName("FirstName");
+                p.Property(p => p.LastName).HasColumnName("LastName");
+                p.Property(p => p.Email).HasColumnName("Email");
+                p.Property(p => p.PasswordHash).HasColumnName("PasswordHash");
+                p.Property(p => p.PasswordSalt).HasColumnName("PasswordSalt");
+                p.Property(p => p.Status).HasColumnName("Status");
+                p.Property(p => p.AuthenticatorType).HasColumnName("AuthenticatorType");
+
+                p.HasMany(p => p.UserOperationClaims);
+                p.HasMany(p => p.RefreshTokens);
+            });
+
+            modelBuilder.Entity<Developer>(p =>
+            {
+                p.ToTable("Developers");
+                p.HasMany(p => p.GitHubProfiles);
+            });
+
+            modelBuilder.Entity<OperationClaim>(p =>
+            {
+                p.ToTable("OperationClaims").HasKey(x => x.Id);
+                p.Property(x => x.Id).HasColumnName("Id");
+                p.Property(x => x.Name).HasColumnName("Name");
+            });
+
+            modelBuilder.Entity<UserOperationClaim>(p =>
+            {
+                p.ToTable("UserOperationClaims").HasKey(x => x.Id);
+                p.Property(x => x.Id).HasColumnName("Id");
+                p.Property(x => x.UserId).HasColumnName("UserId");
+                p.Property(x => x.OperationClaimId).HasColumnName("OperationClaimId");
+
+                p.HasOne(x => x.OperationClaim);
+                p.HasOne(x => x.User);
+            });
+
+            modelBuilder.Entity<GitHubProfile>(p =>
+            {
+                p.ToTable("GitHubProfiles").HasKey(k => k.Id);
+                p.Property(p => p.Id).HasColumnName("Id");
+                p.Property(p => p.DeveloperId).HasColumnName("DeveloperId");
+                p.Property(p => p.ProfileUrl).HasColumnName("ProfileUrl");
+
+                p.HasOne(p => p.Developer);
+            });
+
+            
+            ProgrammingLanguage[] programmingLanguageEntitySeeds = { new(1, "C#"), new(2, "Python"), new(3,"Java") };
+            modelBuilder.Entity<ProgrammingLanguage>().HasData(programmingLanguageEntitySeeds);
+
+            
 
             Technology[] technologyEntitySeeds =
             {

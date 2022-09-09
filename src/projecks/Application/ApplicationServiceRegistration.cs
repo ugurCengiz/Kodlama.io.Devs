@@ -4,6 +4,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Features.Developers.Rules;
+using Application.Features.GitHubProfiles.Rules;
 using Application.Features.Technologies.Rules;
 
 namespace Application
@@ -17,6 +19,8 @@ namespace Application
 
             services.AddScoped<ProgrammingLanguageRules>();
             services.AddScoped<TechnologyBusinessRules>();
+            services.AddScoped<DeveloperBusinessRules>();
+            services.AddScoped<GitHubProfileBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
