@@ -9,15 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Persistence.Contexts
 {
-    public class BaseDbContext:DbContext
+    public class BaseDbContext : DbContext
     {
         public IConfiguration Configuration { get; set; }
 
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
-        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration ):base(dbContextOptions)
+        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
-            
+
             Configuration = configuration;
         }
 
@@ -36,11 +36,37 @@ namespace Persistence.Contexts
                 a.ToTable("ProgrammingLanguages").HasKey(k => k.Id);
                 a.Property(p => p.Id).HasColumnName("Id");
                 a.Property(p => p.Name).HasColumnName("Name");
+
+                a.HasMany(p => p.Technologies);
+            });
+
+           
+            
+            
+            ProgrammingLanguage[] programmingLanguageEntitySeeds = { new(1, "C#"), new(2, "Python"), new(3,"Java") };
+            modelBuilder.Entity<ProgrammingLanguage>().HasData(programmingLanguageEntitySeeds);
+
+
+
+            modelBuilder.Entity<Technology>(a =>
+            {
+                a.ToTable("Technologies").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.ProgrammingLanguageId).HasColumnName("ProgrammingLanguageId");
+                a.Property(p => p.Name).HasColumnName("Name");
+
+                a.HasOne(p => p.ProgrammingLanguage);
             });
 
 
-            ProgrammingLanguage[] programmingLanguageEntitySeeds = {new(1, "C#"), new(2, "Python")};
-            modelBuilder.Entity<ProgrammingLanguage>().HasData(programmingLanguageEntitySeeds);
+            Technology[] technologyEntitySeeds =
+            {
+                new(1, 1, "ASP.NET"),
+                new(2, 3, "SPRİNG"),
+                new(3, 1, "Windows Presentation Foundation"),
+                new(4, 3, "JavaServer Pages")
+            };
+            modelBuilder.Entity<Technology>().HasData(technologyEntitySeeds);
         }
     }
 }

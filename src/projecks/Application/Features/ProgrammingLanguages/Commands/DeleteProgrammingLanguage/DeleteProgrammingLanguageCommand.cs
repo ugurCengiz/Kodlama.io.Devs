@@ -14,13 +14,11 @@ namespace Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLa
         public class DeleteProgrammingLanguageCommandHandler : IRequestHandler<DeleteProgrammingLanguageCommand, DeletedProgrammingLanguageDto>
         {
             private readonly IProgrammingLanguageRepository _repository;
-            private readonly ProgrammingLanguageRules _rules;
             private readonly IMapper _mapper;
 
-            public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository repository, ProgrammingLanguageRules rules, IMapper mapper)
+            public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository repository, IMapper mapper)
             {
                 _repository = repository;
-                _rules = rules;
                 _mapper = mapper;
             }
 

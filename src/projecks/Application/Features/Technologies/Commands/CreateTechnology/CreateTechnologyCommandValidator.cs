@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentValidation;
+
+namespace Application.Features.Technologies.Commands.CreateTechnology
+{
+    public class CreateTechnologyCommandValidator : AbstractValidator<CreateTechologyCommand>
+    {
+        public CreateTechnologyCommandValidator()
+        {
+            RuleFor(c => c.Name).NotEmpty();
+            RuleFor(c => c.Name).MinimumLength(3);
+        }
+    }
+}
