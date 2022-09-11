@@ -9,5 +9,15 @@ namespace WebAPI.Controllers
         private IMediator? _mediator;
 
 
+
+
+        protected string getIpAddress()
+        {
+            if (Request.Headers.ContainsKey("X-Forwarded-For")) return Request.Headers["X-Forwarded-For"];
+            return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+
+        }
+
+
     }
 }

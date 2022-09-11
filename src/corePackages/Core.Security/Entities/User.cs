@@ -27,7 +27,7 @@ namespace Core.Security.Entities
             RefreshTokens = new HashSet<RefreshToken>();
         }
 
-        public User(int id, string firstName, string lastName, string email, byte[] passwordSalt, byte[] passwordHash,
+        public User(int id, string firstName,bool isActive, string lastName, string email, byte[] passwordSalt, byte[] passwordHash,
             bool status, AuthenticatorType authenticatorType) : this()
         {
             Id = id;
@@ -38,6 +38,7 @@ namespace Core.Security.Entities
             PasswordHash = passwordHash;
             Status = status;
             AuthenticatorType = authenticatorType;
+            IsActive = isActive;
         }
     }
 }

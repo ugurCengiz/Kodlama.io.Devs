@@ -1,6 +1,8 @@
-﻿using Application.Features.Developers.Commands.CreateDeveloper;
-using Application.Features.Developers.Commands.LoginDeveloper;
-using MediatR;
+﻿using Application.Features.Authorizations.Commands.Login;
+using Application.Features.Authorizations.Commands.Register;
+using Application.Features.Authorizations.Dtos;
+using Core.Security.Dtos;
+using Core.Security.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,21 +12,47 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-       
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] CreateDeveloperCommand createDeveloperCommand)
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
-            var result = Mediator.Send(createDeveloperCommand);
-            return Ok(result);
+            RegisterCommand registerCommand = new RegisterCommand
+            {
+                UserForRegisterDto = userForRegisterDto,
+                IPAddress = getIpAddress()
+            };
+
+            RegisteredDto registeredDto = await Mediator.Send(registerCommand);
+            setRefreshTokenToCookie(registeredDto.RefreshToken);
+            return Created("", registeredDto.AccessToken);
         }
 
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDeveloperCommand loginDeveloperCommand)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
         {
-            var result = await Mediator.Send(loginDeveloperCommand);
-            return Ok(result);
+            LoginCommand loginCommand = new()
+            {
+                UserForLoginDto = userForLoginDto,
+                IPAddress = getIpAddress()
+            };
+
+            LoggedDto loggedDto = await Mediator.Send(loginCommand);
+
+            if(loggedDto.RefreshToken is not null) setRefreshTokenToCookie(loggedDto.RefreshToken);
+
+            return Ok(loggedDto.AccessToken);
+        }
+
+        private string getRefreshTokenFromCookies()
+        {
+            return Request.Cookies["refreshToken"];
+        }
+
+
+        private void setRefreshTokenToCookie(RefreshToken refreshToken)
+        {
+            CookieOptions cookieOptions = new() { HttpOnly = true, Expires = DateTime.UtcNow.AddDays(7) };
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
         }
     }
 }

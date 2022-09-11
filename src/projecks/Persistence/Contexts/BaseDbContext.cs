@@ -15,6 +15,9 @@ namespace Persistence.Contexts
         public IConfiguration Configuration { get; set; }
 
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+       
+        public DbSet<Technology> Technologies { get; set; }
+
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
@@ -68,11 +71,7 @@ namespace Persistence.Contexts
                 p.HasMany(p => p.RefreshTokens);
             });
 
-            modelBuilder.Entity<Developer>(p =>
-            {
-                p.ToTable("Developers");
-                p.HasMany(p => p.GitHubProfiles);
-            });
+            
 
             modelBuilder.Entity<OperationClaim>(p =>
             {
@@ -92,15 +91,7 @@ namespace Persistence.Contexts
                 p.HasOne(x => x.User);
             });
 
-            modelBuilder.Entity<GitHubProfile>(p =>
-            {
-                p.ToTable("GitHubProfiles").HasKey(k => k.Id);
-                p.Property(p => p.Id).HasColumnName("Id");
-                p.Property(p => p.DeveloperId).HasColumnName("DeveloperId");
-                p.Property(p => p.ProfileUrl).HasColumnName("ProfileUrl");
-
-                p.HasOne(p => p.Developer);
-            });
+           
 
             
             ProgrammingLanguage[] programmingLanguageEntitySeeds = { new(1, "C#"), new(2, "Python"), new(3,"Java") };

@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Developers\Constants\" />
-    <Folder Include="Features\Developers\Models\" />
-    <Folder Include="Features\Developers\Queries\" />
-    <Folder Include="Features\GitHubProfiles\Constants\" />
     <Folder Include="Features\ProgrammingLanguages\Constants\" />
     <Folder Include="Features\Technologies\Constants\" />
     <Folder Include="Features\Technologies\Models\" />
