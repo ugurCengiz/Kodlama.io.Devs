@@ -69,6 +69,7 @@ namespace Persistence.Contexts
 
                 p.HasMany(p => p.UserOperationClaims);
                 p.HasMany(p => p.RefreshTokens);
+                
             });
 
             
@@ -88,6 +89,16 @@ namespace Persistence.Contexts
                 p.Property(x => x.OperationClaimId).HasColumnName("OperationClaimId");
 
                 p.HasOne(x => x.OperationClaim);
+                p.HasOne(x => x.User);
+            });
+
+            modelBuilder.Entity<GitHubProfile>(p =>
+            {
+                p.ToTable("GitHubProfiles").HasKey(x => x.Id);
+                p.Property(x=>x.Id).HasColumnName("Id");
+                p.Property(x => x.UserId).HasColumnName("UserId");
+                p.Property(x => x.GitHubLink).HasColumnName("GitHubLink");
+
                 p.HasOne(x => x.User);
             });
 

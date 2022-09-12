@@ -38,7 +38,7 @@ namespace Core.Security.Entities
             PasswordHash = passwordHash;
             Status = status;
             AuthenticatorType = authenticatorType;
-            IsActive = isActive;
+            
         }
     }
 }

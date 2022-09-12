@@ -15,11 +15,11 @@ namespace Core.Security.Entities
         public virtual User User { get; set; }
         public virtual OperationClaim OperationClaim { get; set; }
 
-        public UserOperationClaim(int operationClaimId, int userId,int id,bool isActive): base(id,isActive)
+        public UserOperationClaim(int operationClaimId, int userId,int id): base(id)
         {
             OperationClaimId = operationClaimId;
             UserId = userId;
-            IsActive = isActive;
+            
 
         }
 

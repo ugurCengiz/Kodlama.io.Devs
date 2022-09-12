@@ -47,7 +47,7 @@ namespace Application.Features.Authorizations.Commands.Register
                     PasswordHash = passWordHash,
                     PasswordSalt = passWordSalt,
                     Status = true,
-                    IsActive = true
+                    
                 };
 
                 User createdUser = await _userRepository.AddAsync(user);

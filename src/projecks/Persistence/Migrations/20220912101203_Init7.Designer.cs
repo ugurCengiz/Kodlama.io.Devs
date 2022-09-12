@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
@@ -11,9 +12,10 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220912101203_Init7")]
+    partial class Init7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +32,9 @@ namespace Persistence.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -58,6 +63,9 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("Expires")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ReasonRevoked")
                         .HasColumnType("nvarchar(max)");
@@ -108,6 +116,9 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("FirstName");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -141,6 +152,9 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("OperationClaimId")
                         .HasColumnType("int")
                         .HasColumnName("OperationClaimId");
@@ -172,6 +186,9 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("GitHubLink");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserId");
@@ -192,6 +209,9 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -205,16 +225,19 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            IsActive = false,
                             Name = "C#"
                         },
                         new
                         {
                             Id = 2,
+                            IsActive = false,
                             Name = "Python"
                         },
                         new
                         {
                             Id = 3,
+                            IsActive = false,
                             Name = "Java"
                         });
                 });
@@ -227,6 +250,9 @@ namespace Persistence.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -247,24 +273,28 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            IsActive = false,
                             Name = "ASP.NET",
                             ProgrammingLanguageId = 1
                         },
                         new
                         {
                             Id = 2,
+                            IsActive = false,
                             Name = "SPRİNG",
                             ProgrammingLanguageId = 3
                         },
                         new
                         {
                             Id = 3,
+                            IsActive = false,
                             Name = "Windows Presentation Foundation",
                             ProgrammingLanguageId = 1
                         },
                         new
                         {
                             Id = 4,
+                            IsActive = false,
                             Name = "JavaServer Pages",
                             ProgrammingLanguageId = 3
                         });

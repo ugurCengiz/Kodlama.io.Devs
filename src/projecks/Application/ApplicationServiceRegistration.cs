@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Application.Features.Authorizations.Rules;
+using Application.Features.GitHubProfiles.Rules;
 using Application.Features.Technologies.Rules;
 using Application.Services.AuthService;
 using Application.Services.UserService;
@@ -25,6 +26,7 @@ namespace Application
             services.AddScoped<ProgrammingLanguageRules>();
             services.AddScoped<TechnologyBusinessRules>();
             services.AddScoped<AuthorizationsBusinessRules>();
+            services.AddScoped<GitHubProfileRules>();
           
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
