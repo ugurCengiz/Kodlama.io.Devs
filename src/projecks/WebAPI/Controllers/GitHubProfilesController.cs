@@ -2,6 +2,9 @@
 using Application.Features.GitHubProfiles.Commands.DeleteGitHubProfile;
 using Application.Features.GitHubProfiles.Commands.UpdateGitHubProfile;
 using Application.Features.GitHubProfiles.Dtos;
+using Application.Features.GitHubProfiles.Models;
+using Application.Features.GitHubProfiles.Queries.GetListGitHub;
+using Core.Application.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +32,14 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateGitHubProfileCommand updateGitHubProfileCommand)
         {
             UpdatedGitHubProfileDto result = await Mediator.Send(updateGitHubProfileCommand);
+            return Ok(result);
+        }
+
+        [HttpGet("GetList")]
+        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        {
+            GetListGitHubProfileQuery getListGitHubProfileQuery = new() { PageRequest = pageRequest };
+            GitHubProfileListModel result = await Mediator.Send(getListGitHubProfileQuery);
             return Ok(result);
         }
     }

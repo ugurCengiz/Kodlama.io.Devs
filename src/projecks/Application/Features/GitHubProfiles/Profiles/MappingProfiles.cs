@@ -7,7 +7,10 @@ using Application.Features.GitHubProfiles.Commands.CreateGitHubProfile;
 using Application.Features.GitHubProfiles.Commands.DeleteGitHubProfile;
 using Application.Features.GitHubProfiles.Commands.UpdateGitHubProfile;
 using Application.Features.GitHubProfiles.Dtos;
+using Application.Features.GitHubProfiles.Models;
+using Application.Features.GitHubProfiles.Queries.GetListGitHub;
 using AutoMapper;
+using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.GitHubProfiles.Profiles
@@ -24,6 +27,10 @@ namespace Application.Features.GitHubProfiles.Profiles
 
             CreateMap<GitHubProfile, UpdatedGitHubProfileDto>().ReverseMap();
             CreateMap<GitHubProfile, UpdateGitHubProfileCommand>().ReverseMap();
+
+            CreateMap<IPaginate<GitHubProfile>, GitHubProfileListModel>().ReverseMap();
+            CreateMap<GitHubProfile, GetListGitHubProfileDto>().ReverseMap();
+            CreateMap<GitHubProfile, GetListGitHubProfileQuery>().ReverseMap();
 
 
 
