@@ -29,7 +29,10 @@ namespace Application.Features.GitHubProfiles.Profiles
             CreateMap<GitHubProfile, UpdateGitHubProfileCommand>().ReverseMap();
 
             CreateMap<IPaginate<GitHubProfile>, GitHubProfileListModel>().ReverseMap();
-            CreateMap<GitHubProfile, GetListGitHubProfileDto>().ReverseMap();
+            CreateMap<GitHubProfile, GetListGitHubProfileDto>()
+                .ForMember(x=>x.UserFirstName , opt=>opt.MapFrom(z=>z.User.FirstName))
+                .ForMember(x=>x.UserLastName , opt=>opt.MapFrom(z=>z.User.LastName))
+                .ReverseMap();
             CreateMap<GitHubProfile, GetListGitHubProfileQuery>().ReverseMap();
 
 
